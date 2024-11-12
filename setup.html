@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL 생성기</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    * {
+      font-family: 'Pretendard', sans-serif;
+    }
+  </style>
+</head>
+<body class="m-0 p-0 h-screen bg-sky-950 flex flex-col">
+  <div class="mx-auto my-4 w-full max-w-screen-md p-4">
+    <div class="w-full h-full bg-white px-4 py-2">
+      <h1 class="block w-full text-center text-2xl font-bold p-4">URL 생성기</h1>
+
+      <div class="flex flex-col gap-1">
+        <p class="text-md">생성된 URL</p>
+        <input type="text" class="w-full px-2 py-1 border rounded-md" id="url" value="https://example.com/">
+        <div class="flex justify-end gap-2">
+          <button class="bg-blue-500 transition hover:bg-blue-700 text-white rounded-md px-4 py-1" onclick="copyURL()">복사</button>          
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-1">
+          <p class="text-md">승차권 번호</p>
+          <input type="number" class="w-full px-2 py-1 border rounded-md" data-query-name="ticket_id" placeholder="12345678901234567890">
+        </div>
+
+        <div class="flex flex-col gap-4 sm:flex-row sm:gap-2 items-stretch">
+          <div class="flex flex-col gap-1 w-full">
+            <p class="text-md">출발역</p>
+            <input type="text" class="w-full px-2 py-1 border rounded-md" data-query-name="start_station_name" placeholder="서울역">
+          </div>
+          <div class="flex flex-col gap-1 w-full">
+            <p class="text-md">출발시각</p>
+            <input type="datetime-local" class="w-full px-2 py-1 border rounded-md" data-query-name="start_time" placeholder="2024-11-12 22:10:43">
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-4 sm:flex-row sm:gap-2 items-stretch">
+          <div class="flex flex-col gap-1 w-full">
+            <p class="text-md">도착역</p>
+            <input type="text" class="w-full px-2 py-1 border rounded-md" data-query-name="end_station_name" placeholder="부산역">
+          </div>
+          <div class="flex flex-col gap-1 w-full">
+            <p class="text-md">도착시각</p>
+            <input type="datetime-local" class="w-full px-2 py-1 border rounded-md" data-query-name="end_time" placeholder="2024-11-12 22:10:43">
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-1 w-full">
+          <p class="text-md">기차 이름</p>
+          <input type="text" class="w-full px-2 py-1 border rounded-md" data-query-name="train_name" placeholder="무궁화호 3402">
+        </div>
+
+        <div class="flex flex-col gap-1 w-full">
+          <p class="text-md">호차 번호</p>
+          <input type="number" class="w-full px-2 py-1 border rounded-md" data-query-name="car_no" placeholder="1">
+        </div>
+
+        <div class="flex flex-col gap-1 w-full">
+          <p class="text-md">플랫폼 번호</p>
+          <input type="number" class="w-full px-2 py-1 border rounded-md" data-query-name="platform" placeholder="1">
+        </div>
+
+        <div class="flex flex-col gap-4 sm:flex-row sm:gap-2 items-stretch">
+          <div class="flex flex-col gap-1 w-full">
+            <p class="text-md">좌석 등급</p>
+            <select class="w-full px-2 py-1 border rounded-md" data-query-name="room_type">
+              <option value="일반실">일반실</option>
+              <option value="우등실">우등실</option>
+              <option value="특실">특실</option>
+            </select>
+          </div>
+
+          <div class="flex flex-col gap-1 w-full">
+            <p class="text-md">운행 방향</p>
+            <select class="w-full px-2 py-1 border rounded-md" data-query-name="train_direction">
+              <option value="순방향">순방향</option>
+              <option value="역방향">역방향</option>
+            </select>
+          </div>
+
+          <div class="flex flex-col gap-1 w-full">
+            <p class="text-md">좌석 번호</p>
+            <input type="text" class="w-full px-2 py-1 border rounded-md" data-query-name="seat_no" placeholder="12A">
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-1 w-full">
+          <p class="text-md">운임 종류</p>
+          <select class="w-full px-2 py-1 border rounded-md" data-query-name="ticket_type">
+            <option value="어른">어른</option>
+            <option value="청소년">청소년</option>
+            <option value="어린이">어린이</option>
+          </select>
+        </div>
+
+        <div class="flex flex-col gap-1 w-full">
+          <p class="text-md">QR코드 내용</p>
+          <input type="text" class="w-full px-2 py-1 border rounded-md" data-query-name="qrcode_data" placeholder="https://example.com/qr">
+        </div>
+      </div>
+      <button class="w-full bg-blue-500 transition hover:bg-blue-700 text-white rounded-md px-4 py-1 mt-4" onclick="generateURL()">URL 생성</button>
+    </div>
+
+  </div>
+</body>
+<script>
+  const baseURL = location.protocol + '//' + location.host + '/';
+  document.getElementById('url').value = baseURL;
+
+  function generateURL() {
+    const search = new URLSearchParams();
+    const inputs = document.querySelectorAll('input, select');
+
+    inputs.forEach(input => {
+      if (input.dataset.queryName) {
+        if (input.value === '') return;
+
+        if (input.type === 'datetime-local') {
+          const value = new Date(input.value).getTime();
+          search.set(input.dataset.queryName, value);
+        } else {
+          search.set(input.dataset.queryName, input.value);
+        }
+      }
+    });
+    document.getElementById('url').value = baseURL + '?' + search.toString();
+  }
+
+  function copyURL() {
+    const url = document.getElementById('url');
+    url.select();
+    url.setSelectionRange(0, 99999);
+    document.execCommand('copy');
+  }
+
+
+
+</script>
+</html>

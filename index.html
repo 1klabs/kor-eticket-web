@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Korail Ticket</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
@@ -106,15 +107,15 @@
                 </div>
                 <div class="text-sky-950"><span id="car_no" class="text-3xl">1</span>호차</div>
                 <div id="seat_no" class="text-sky-950 text-3xl">2A</div>
-                <div>QR코드 대충</div>
+                <div><div class="flex items-center justify-center" id="qrcode_area"></div></div>
               </div>
             </div>
           </div>
 
           <div class="flex divide-x px-2 text-sm">
-            <span class="px-2">일반실</span>
-            <span class="px-2">순방향</span>
-            <span class="px-2">어른</span>
+            <span id="room_type" class="px-2">일반실</span>
+            <span id="train_direction" class="px-2">순방향</span>
+            <span id="ticket_type" class="px-2">어른</span>
           </div>
 
           <div class="flex justify-between items-center px-4 py-2">
@@ -172,6 +173,9 @@
   const startDateElement = document.getElementById('start_date');
   const startTimeElement = document.getElementById('start_time');
   const endTimeElement = document.getElementById('end_time');
+  const roomTypeElement = document.getElementById('room_type');
+  const trainDirectionElement = document.getElementById('train_direction');
+  const ticketTypeElement = document.getElementById('ticket_type');
 
   if (query.has('ticket_id')) {
     const ticket = query.get('ticket_id');
@@ -179,7 +183,10 @@
   }
 
   if (query.has('start_time')) {
-    const startTime = query.get('start_time');
+    let startTime = query.get('start_time');
+    if (/[0-9]+/g.test(startTime)) {
+      startTime = new Date(parseInt(startTime));
+    }
 
     // parse startTime
     const date = new Date(startTime);
@@ -192,7 +199,10 @@
   }
 
   if (query.has('end_time')) {
-    const endTime = query.get('end_time');
+    let endTime = query.get('end_time');
+    if (/[0-9]+/g.test(endTime)) {
+      endTime = new Date(parseInt(endTime));
+    }
 
     // parse endTime
     const date = new Date(endTime);
@@ -223,6 +233,32 @@
     seatNoElement.innerText = query.get('seat_no');
   }
 
+  if (query.has('room_type')) {
+    roomTypeElement.innerText = query.get('room_type');
+  }
+
+  if (query.has('train_direction')) {
+    trainDirectionElement.innerText = query.get('train_direction');
+  }
+
+  if (query.has('ticket_type')) {
+    ticketTypeElement.innerText = query.get('ticket_type');
+  }
+
+  let qrCodeData = 'https://twitter.com/@Macbuki';
+  if (query.has('qrcode_data')) {
+    qrCodeData = query.get('qrcode_data');
+  }
+
+  const qrcode = new QRCode(document.getElementById('qrcode_area'), {
+    text: qrCodeData,
+    height: 64,
+    width: 64,
+    colorDark: '#000000',
+    colorLight: '#ffffff',
+    correctLevel: QRCode.CorrectLevel.H
+  });
+
   if (query.has('platform')) {
     let value = query.get('platform');
     if (/^[0-9]+$/g.test(value)) {
@@ -231,7 +267,11 @@
   
     // check if the start time is 15 minutes before
     if (query.has('start_time')) {
-      const startTime = query.get('start_time');
+      let startTime = query.get('start_time');
+      if (/[0-9]+/g.test(startTime)) {
+        startTime = new Date(parseInt(startTime));
+      }
+
       const date = new Date(startTime);
       const now = new Date();
       const diff = date - now;
