@@ -21,7 +21,8 @@
         <p class="text-md">생성된 URL</p>
         <input type="text" class="w-full px-2 py-1 border rounded-md" id="url" value="https://example.com/">
         <div class="flex justify-end gap-2">
-          <button class="bg-blue-500 transition hover:bg-blue-700 text-white rounded-md px-4 py-1" onclick="copyURL()">복사</button>          
+          <button class="bg-blue-500 transition hover:bg-blue-700 text-white rounded-md px-4 py-1" onclick="parseURL()">불러오기</button>       
+          <button class="bg-blue-500 transition hover:bg-blue-700 text-white rounded-md px-4 py-1" onclick="copyURL()">복사</button>
         </div>
       </div>
 
@@ -74,7 +75,8 @@
             <select class="w-full px-2 py-1 border rounded-md" data-query-name="room_type">
               <option value="일반실">일반실</option>
               <option value="우등실">우등실</option>
-              <option value="특실">특실</option>
+              <option value="특등실">특등실</option>
+              <option value="특등실">입석</option>
             </select>
           </div>
 
@@ -139,6 +141,26 @@
     url.select();
     url.setSelectionRange(0, 99999);
     document.execCommand('copy');
+  }
+
+  function parseURL() {
+    const url = document.getElementById('url').value;
+    const parsed = new URL(url);
+    const search = parsed.searchParams;
+    const inputs = document.querySelectorAll('input, select');
+
+    inputs.forEach(input => {
+      if (input.dataset.queryName) {
+        const value = search.get(input.dataset.queryName);
+        if (value) {
+          if (input.type === 'datetime-local') {
+            input.value = new Date(parseInt(value)).toISOString().slice(0, 16);
+          } else {
+            input.value = value;
+          }
+        }
+      }
+    });
   }
 
 
