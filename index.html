@@ -42,124 +42,126 @@
     }
   </style>
 </head>
-<body class="m-0 p-0 h-screen bg-sky-950 flex flex-col">
-  <header class="bg-sky-950 text-white text-center px-4 py-2 flex justify-between items-center">
-    <div class="w-4 h-4 flex items-center cursor-pointer">
-      <i class="fas fa-chevron-left"></i>
-    </div>
-    <h1 class="text-2xl">나의티켓</h1>
-    <div class="w-4 h-4 flex items-center cursor-pointer">
-      <i class="fas fa-bars"></i>
-    </div>
-  </header>
-  <div class="grid grid-cols-3 bg-white font-bold text-lg text-zinc-400">
-    <div class="cursor-pointer border-b-2 border-sky-950 text-sky-950 text-center p-4">승차권</div>
-    <div class="cursor-pointer text-center p-4">이용권</div>
-    <div class="cursor-pointer text-center p-4 truncate">정기권·패스</div>
-  </div> 
-  <main class="grow bg-zinc-300 overflow-y-scroll">
-    <div class="flex flex-col p-4">
-      <div class="flex flex-col">
-        <div class="text-sm py-1 rounded-t-md bg-sky-800 text-white px-3 flex justify-between items-center">
-          <p id="start_date">2024년 11월 14일 (목)</p>
-          <p class="hidden sm:block">스마트티켓 1매</p>
-        </div>
-        <div class="bg-white rounded-b-md">
-          <div class="flex flex-col">
-            <div class="flex gap-2 py-6">
-              <div class="flex flex-col gap-2 items-center grow shrink-0 text-2xl">
-                <p id="start_station_name">성남</p>
-                <p class="text-sky-800" id="start_time">22:10</p>
-              </div>
-              <div class="text-sky-800 text-xl">
-                <i class="fas fa-arrow-right shrink"></i>
-              </div>
-              <div class="flex flex-col gap-2 items-center grow shrink-0 text-2xl">
-                <p id="end_station_name">부산</p>
-                <p class="text-sky-800" id="end_time">23:10</p>
-              </div>
-            </div>
-            <div class="mx-4">
-              <div class="w-full border border-zinc-300"></div>
-            </div>
-            <div class="py-2 px-6 flex justify-between items-center">
-              <p id="train_name">APC-ARIS 5500</p>
-              <button class="rounded-full border-sky-950 text-sky-950 border px-2 font-semibold flex gap-1 items-center">
-                <i class="fas fa-clock"></i>
-                <span>운행정보</span>
-              </button>
-            </div>
-            <div class="mx-4">
-              <div class="w-full border border-zinc-300"></div>
-            </div>
-
-            <div class="p-4 flex flex-col">
-              <div class="grid grid-cols-4 bg-zinc-300 text-sm divide-x border-zinc-950 text-center">
-                <div>타는곳번호</div>
-                <div>호차번호</div>
-                <div>좌석번호</div>
-                <div>운임영수증</div>
-              </div>
-              <div class="grid grid-cols-4 bg-white text-sm divide-x border-black text-center items-center h-24">
-                <div id="platform" class="flex flex-col items-center gap-1 py-2" onclick="reloadPlatform()">
-                  <i class="fas fa-sync-alt text-sky-950 text-2xl"></i>
-                  <span class="text-sky-950">15분전에 표시됩니다</span>
+<body class="m-0 p-0 h-screen bg-zinc-200">
+  <div class="mx-auto w-full max-w-[500px] h-full flex flex-col">
+    <header class="bg-sky-950 text-white text-center px-4 py-2 flex justify-between items-center">
+      <div class="w-4 h-4 flex items-center cursor-pointer">
+        <i class="fas fa-chevron-left"></i>
+      </div>
+      <h1 class="text-xl sm:text-2xl">나의티켓</h1>
+      <div class="w-4 h-4 flex items-center cursor-pointer">
+        <i class="fas fa-bars"></i>
+      </div>
+    </header>
+    <div class="grid grid-cols-3 bg-white font-bold text-md sm:text-lg text-zinc-400">
+      <div class="cursor-pointer border-b-2 border-sky-950 text-sky-950 text-center p-4">승차권</div>
+      <div class="cursor-pointer text-center p-4">이용권</div>
+      <div class="cursor-pointer text-center p-4 truncate">정기권·패스</div>
+    </div> 
+    <main class="grow bg-zinc-300 overflow-y-scroll">
+      <div class="flex flex-col p-4">
+        <div class="flex flex-col">
+          <div class="text-sm py-1 rounded-t-md bg-sky-800 text-white px-3 flex justify-between items-center">
+            <p id="start_date">2024년 11월 14일 (목)</p>
+            <p>스마트티켓 1매</p>
+          </div>
+          <div class="bg-white rounded-b-md">
+            <div class="flex flex-col">
+              <div class="flex gap-2 py-6">
+                <div class="flex flex-col gap-2 items-center grow shrink-0 text-2xl">
+                  <p id="start_station_name">성남</p>
+                  <p class="text-sky-800" id="start_time">22:10</p>
                 </div>
-                <div class="text-sky-950"><span id="car_no" class="text-3xl">1</span>호차</div>
-                <div id="seat_no" class="text-sky-950 text-3xl">2A</div>
-                <div><div class="flex items-center justify-center" id="qrcode_area"></div></div>
+                <div class="text-sky-800 text-xl">
+                  <i class="fas fa-arrow-right shrink"></i>
+                </div>
+                <div class="flex flex-col gap-2 items-center grow shrink-0 text-2xl">
+                  <p id="end_station_name">부산</p>
+                  <p class="text-sky-800" id="end_time">23:10</p>
+                </div>
+              </div>
+              <div class="mx-4">
+                <div class="w-full border border-zinc-300"></div>
+              </div>
+              <div class="py-2 px-6 flex justify-between items-center">
+                <p id="train_name">APC-ARIS 5500</p>
+                <button class="rounded-full border-sky-950 text-sky-950 border px-2 font-semibold flex gap-1 items-center">
+                  <i class="fas fa-clock"></i>
+                  <span>운행정보</span>
+                </button>
+              </div>
+              <div class="mx-4">
+                <div class="w-full border border-zinc-300"></div>
+              </div>
+  
+              <div class="p-4 flex flex-col">
+                <div class="grid grid-cols-4 bg-zinc-300 text-sm divide-x border-zinc-950 text-center">
+                  <div>타는곳번호</div>
+                  <div>호차번호</div>
+                  <div>좌석번호</div>
+                  <div>운임영수증</div>
+                </div>
+                <div class="grid grid-cols-4 bg-white text-sm divide-x border-black text-center items-center h-24">
+                  <div id="platform" class="flex flex-col items-center gap-1 py-2" onclick="reloadPlatform()">
+                    <i class="fas fa-sync-alt text-sky-950 text-2xl"></i>
+                    <span class="text-sky-950">15분전에 표시됩니다</span>
+                  </div>
+                  <div class="text-sky-950"><span id="car_no" class="text-3xl">1</span>호차</div>
+                  <div id="seat_no" class="text-sky-950 text-3xl">2A</div>
+                  <div><div class="flex items-center justify-center" id="qrcode_area"></div></div>
+                </div>
               </div>
             </div>
+  
+            <div class="flex divide-x px-2 text-sm">
+              <span id="room_type" class="px-2">일반실</span>
+              <span id="train_direction" class="px-2">순방향</span>
+              <span id="ticket_type" class="px-2">어른</span>
+            </div>
+  
+            <div class="flex justify-between items-center px-4 py-2 gap-2">
+              <span class="font-bold shrink-0">승차권 번호</span>
+              <span class="truncate" id="ticket_id">12345678901234567890</span>
+            </div>
           </div>
-
-          <div class="flex divide-x px-2 text-sm">
-            <span id="room_type" class="px-2">일반실</span>
-            <span id="train_direction" class="px-2">순방향</span>
-            <span id="ticket_type" class="px-2">어른</span>
-          </div>
-
-          <div class="flex justify-between items-center px-4 py-2">
-            <span class="font-bold">승차권 번호</span>
-            <span id="ticket_id">12345678901234567890</span>
-          </div>
+  
         </div>
-
+      </div>
+    </main>
+    <div class="marquee h-4">
+      <div class="marquee__inner text-xs flex gap-2">
+        <p>※승차 시 해당열차 승차권을 소지해야 하며, 사진이나 캡처한 화면은 유효한 승차권이 아닙니다.(부가운임 납부 대상)정당 승차권은 이 문구가 왼쪽으로 흐르고 있습니다. </p>
+        <p>※승차 시 해당열차 승차권을 소지해야 하며, 사진이나 캡처한 화면은 유효한 승차권이 아닙니다.(부가운임 납부 대상)정당 승차권은 이 문구가 왼쪽으로 흐르고 있습니다. </p>
+        <p>※승차 시 해당열차 승차권을 소지해야 하며, 사진이나 캡처한 화면은 유효한 승차권이 아닙니다.(부가운임 납부 대상)정당 승차권은 이 문구가 왼쪽으로 흐르고 있습니다. </p>
       </div>
     </div>
-  </main>
-  <div class="marquee h-4">
-    <div class="marquee__inner text-xs flex gap-2">
-      <p>※승차 시 해당열차 승차권을 소지해야 하며, 사진이나 캡처한 화면은 유효한 승차권이 아닙니다.(부가운임 납부 대상)정당 승차권은 이 문구가 왼쪽으로 흐르고 있습니다. </p>
-      <p>※승차 시 해당열차 승차권을 소지해야 하며, 사진이나 캡처한 화면은 유효한 승차권이 아닙니다.(부가운임 납부 대상)정당 승차권은 이 문구가 왼쪽으로 흐르고 있습니다. </p>
-      <p>※승차 시 해당열차 승차권을 소지해야 하며, 사진이나 캡처한 화면은 유효한 승차권이 아닙니다.(부가운임 납부 대상)정당 승차권은 이 문구가 왼쪽으로 흐르고 있습니다. </p>
-    </div>
+    <footer class="bg-zinc-100 text-black text-center grid grid-cols-4 gap-4 px-4">
+      <div class="flex flex-col justify-center items-center text-center cursor-pointer gap-1 py-4">
+        <div class="w-6 h-6 text-xl">
+          <i class="fas fa-home"></i>
+        </div>
+        <p class="truncate w-full text-xs sm:text-sm">홈</p>
+      </div>
+      <div class="flex flex-col justify-center items-center text-center cursor-pointer gap-1 py-4">
+        <div class="w-6 h-6 text-xl">
+          <i class="fas fa-percent"></i>
+        </div>
+        <p class="truncate w-full text-xs sm:text-sm">혜택 · 정기권</p>
+      </div>
+      <div class="flex flex-col justify-center items-center text-center cursor-pointer gap-1 py-4">
+        <div class="w-6 h-6 text-xl">
+          <i class="fas fa-shopping-bag"></i>
+        </div>
+        <p class="truncate w-full text-xs sm:text-sm">지역사랑여행</p>
+      </div>
+      <div class="flex flex-col justify-center items-center text-center cursor-pointer gap-1 text-sky-950 border-t-2 border-sky-950 py-4">
+        <div class="w-6 h-6 text-xl">
+          <i class="fas fa-ticket"></i>
+        </div>
+        <p class="truncate w-full text-xs sm:text-sm">나의티켓</p>
+      </div>
+    </footer>
   </div>
-  <footer class="bg-zinc-100 text-black text-center grid grid-cols-4 gap-4 px-4">
-    <div class="flex flex-col justify-center items-center text-center cursor-pointer gap-1 py-4">
-      <div class="w-6 h-6 text-xl">
-        <i class="fas fa-home"></i>
-      </div>
-      <p class="truncate w-full text-sm">홈</p>
-    </div>
-    <div class="flex flex-col justify-center items-center text-center cursor-pointer gap-1 py-4">
-      <div class="w-6 h-6 text-xl">
-        <i class="fas fa-percent"></i>
-      </div>
-      <p class="truncate w-full text-sm">혜택 · 정기권</p>
-    </div>
-    <div class="flex flex-col justify-center items-center text-center cursor-pointer gap-1 py-4">
-      <div class="w-6 h-6 text-xl">
-        <i class="fas fa-shopping-bag"></i>
-      </div>
-      <p class="truncate w-full text-sm">지역사랑여행</p>
-    </div>
-    <div class="flex flex-col justify-center items-center text-center cursor-pointer gap-1 text-sky-950 border-t-2 border-sky-950 py-4">
-      <div class="w-6 h-6 text-xl">
-        <i class="fas fa-ticket"></i>
-      </div>
-      <p class="truncate w-full text-sm">나의티켓</p>
-    </div>
-  </footer>
 </body>
 <script>
   const query = new URLSearchParams(window.location.search);
