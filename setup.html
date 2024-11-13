@@ -82,7 +82,10 @@
               <option value="우등실">우등실</option>
               <option value="특등실">특등실</option>
               <option value="입석">입석</option>
+              <option value="__custom__">사용자 지정</option>
             </select>
+
+            <input type="text" class="w-full px-2 py-1 border rounded-md hidden" data-query-name="room_type_custom" placeholder="사용자 지정">
           </div>
 
           <div class="flex flex-col gap-1 w-full">
@@ -90,7 +93,10 @@
             <select class="w-full px-2 py-1 border rounded-md" data-query-name="train_direction">
               <option value="순방향">순방향</option>
               <option value="역방향">역방향</option>
+              <option value="__custom__">사용자 지정</option>
             </select>
+
+            <input type="text" class="w-full px-2 py-1 border rounded-md hidden" data-query-name="train_direction_custom" placeholder="사용자 지정">
           </div>
 
           <div class="flex flex-col gap-1 w-full">
@@ -105,7 +111,10 @@
             <option value="어른">어른</option>
             <option value="청소년">청소년</option>
             <option value="어린이">어린이</option>
+            <option value="__custom__">사용자 지정</option>
           </select>
+
+          <input type="text" class="w-full px-2 py-1 border rounded-md hidden" data-query-name="ticket_type_custom" placeholder="사용자 지정">
         </div>
 
         <div class="flex flex-col gap-1 w-full">
@@ -121,6 +130,23 @@
 <script>
   const baseURL = location.protocol + '//' + location.host + '/';
   document.getElementById('url').value = baseURL;
+
+  function setupCustomInputs() {
+    const selects = document.querySelectorAll('select');
+    selects.forEach(select => {
+      select.addEventListener('change', e => {
+        const value = e.target.value;
+        console.log('value', value);
+        const customInput = document.querySelector(`input[data-query-name=${e.target.dataset.queryName}_custom]`);
+
+        if (value === '__custom__') {
+          customInput.classList.remove('hidden');
+        } else {
+          customInput.classList.add('hidden');
+        }
+      });
+    });
+  }
 
   function generateURL() {
     const search = new URLSearchParams();
@@ -159,7 +185,14 @@
         const value = search.get(input.dataset.queryName);
         if (value) {
           if (input.type === 'datetime-local') {
-            input.value = new Date(parseInt(value)).toISOString().slice(0, 16);
+            let parsedInput = value;
+            if (/[0-9]+/g.test(value)) {
+              parsedInput = new Date(parseInt(value));
+            }
+
+            // set as local time
+            const date = new Date(parsedInput);
+            input.value = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}T${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
           } else {
             input.value = value;
           }
@@ -168,7 +201,6 @@
     });
   }
 
-
-
+  setupCustomInputs();
 </script>
 </html>

@@ -234,15 +234,27 @@
   }
 
   if (query.has('room_type')) {
-    roomTypeElement.innerText = query.get('room_type');
+    if (query.get('room_type') === '__custom__' && query.has('room_type_custom')) {
+      roomTypeElement.innerText = query.get('room_type_custom');
+    } else {
+      roomTypeElement.innerText = query.get('room_type');
+    }
   }
 
   if (query.has('train_direction')) {
-    trainDirectionElement.innerText = query.get('train_direction');
+    if (query.get('train_direction') === '__custom__' && query.has('train_direction_custom')) {
+      trainDirectionElement.innerText = query.get('train_direction_custom');
+    } else {
+      trainDirectionElement.innerText = query.get('train_direction');
+    }
   }
 
   if (query.has('ticket_type')) {
-    ticketTypeElement.innerText = query.get('ticket_type');
+    if (query.get('ticket_type') === '__custom__' && query.has('ticket_type_custom')) {
+      ticketTypeElement.innerText = query.get('ticket_type_custom');
+    } else {
+      ticketTypeElement.innerText = query.get('ticket_type');
+    }
   }
 
   let qrCodeData = 'https://twitter.com/@Macbuki';
