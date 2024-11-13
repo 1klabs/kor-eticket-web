@@ -50,7 +50,7 @@
       </div>
       <h1 class="text-xl sm:text-2xl">나의티켓</h1>
       <div class="w-4 h-4 flex items-center cursor-pointer">
-        <i class="fas fa-bars"></i>
+        <i id="fullscreen" class="fas fa-bars"></i>
       </div>
     </header>
     <div class="grid grid-cols-3 bg-white font-bold text-md sm:text-lg text-zinc-400">
@@ -309,5 +309,12 @@
   }
 
   reloadPlatform();
+  document.getElementById('fullscreen').addEventListener('click', () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      document.documentElement.requestFullscreen();
+    }
+  });
 </script>
 </html>
