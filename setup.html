@@ -184,6 +184,12 @@
       if (input.dataset.queryName) {
         const value = search.get(input.dataset.queryName);
         if (value) {
+          if (value === '__custom__') {
+            const customInput = document.querySelector(`input[data-query-name=${input.dataset.queryName}_custom]`);
+            customInput.classList.remove('hidden');
+            customInput.value = search.get(`${input.dataset.queryName}_custom`);
+          }
+
           if (input.type === 'datetime-local') {
             let parsedInput = value;
             if (/[0-9]+/g.test(value)) {
