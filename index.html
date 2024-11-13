@@ -101,7 +101,7 @@
                 <div>운임영수증</div>
               </div>
               <div class="grid grid-cols-4 bg-white text-sm divide-x border-black text-center items-center h-24">
-                <div id="platform" class="flex flex-col items-center gap-1 py-2">
+                <div id="platform" class="flex flex-col items-center gap-1 py-2" onclick="reloadPlatform()">
                   <i class="fas fa-sync-alt text-sky-950 text-2xl"></i>
                   <span class="text-sky-950">15분전에 표시됩니다</span>
                 </div>
@@ -306,5 +306,6 @@
     }
   }
 
+  reloadPlatform();
 </script>
 </html>
