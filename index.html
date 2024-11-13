@@ -271,37 +271,40 @@
     correctLevel: QRCode.CorrectLevel.H
   });
 
-  if (query.has('platform')) {
-    let value = query.get('platform');
-    if (/^[0-9]+$/g.test(value)) {
-      value = `${value}<span class="text-sm">번</span>`;
-    }
-  
-    // check if the start time is 15 minutes before
-    if (query.has('start_time')) {
-      let startTime = query.get('start_time');
-      if (/[0-9]+/g.test(startTime)) {
-        startTime = new Date(parseInt(startTime));
+  function reloadPlatform() {
+    if (query.has('platform')) {
+      let value = query.get('platform');
+      if (/^[0-9]+$/g.test(value)) {
+        value = `${value}<span class="text-sm">번</span>`;
       }
+    
+      // check if the start time is 15 minutes before
+      if (query.has('start_time')) {
+        let startTime = query.get('start_time');
+        if (/[0-9]+/g.test(startTime)) {
+          startTime = new Date(parseInt(startTime));
+        }
 
-      const date = new Date(startTime);
-      const now = new Date();
-      const diff = date - now;
-      if (diff < 15 * 60 * 1000) {
-        platformElement.innerHTML = `
-          <span class="text-sky-950 text-2xl">${value}</span>
-        `;
+        const date = new Date(startTime);
+        const now = new Date();
+        const diff = date - now;
+        if (diff < 15 * 60 * 1000) {
+          platformElement.innerHTML = `
+            <span class="text-sky-950 text-2xl">${value}</span>
+          `;
+        } else {
+          platformElement.innerHTML = `
+            <i class="fas fa-sync-alt text-sky-950 text-2xl"></i>
+            <span class="text-sky-950">15분전에 표시됩니다</span>
+          `;
+        }
       } else {
         platformElement.innerHTML = `
-          <i class="fas fa-sync-alt text-sky-950 text-2xl"></i>
-          <span class="text-sky-950">15분전에 표시됩니다</span>
+          <span class="text-sky-950 text-3xl">${value}</span>
         `;
       }
-    } else {
-      platformElement.innerHTML = `
-        <span class="text-sky-950 text-3xl">${value}</span>
-      `;
     }
   }
+
 </script>
 </html>
