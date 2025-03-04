@@ -37,9 +37,24 @@
         <p class="text-md">생성된 URL</p>
         <input type="text" class="w-full px-2 py-1 border rounded-md" id="url" value="https://example.com/">
         <div class="flex justify-end gap-2">
-          <button class="bg-green-500 transition hover:bg-green-700 text-white rounded-md px-4 py-1" onclick="parseURL()"><i class="fas fa-file-import"></i></button>
-          <button class="bg-blue-500 transition hover:bg-blue-700 text-white rounded-md px-4 py-1" onclick="copyURL()"><i class="fas fa-copy"></i></button>
-          <button class="bg-zinc-500 transition hover:bg-zinc-700 text-white rounded-md px-4 py-1" onclick="window.open(document.getElementById('url').value, '_blank')"><i class="fas fa-arrow-up-right-from-square"></i></i></button>
+          <div class="flex flex-col items-center">
+            <button title="URL에서 변수 불러오기" class="bg-green-500 transition hover:bg-green-700 text-white rounded-md px-4 py-1" onclick="parseURL()">
+              <i class="fas fa-file-import"></i>
+            </button>
+            <span class="text-xs mt-1">불러오기</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <button title="URL 복사하기" class="bg-blue-500 transition hover:bg-blue-700 text-white rounded-md px-4 py-1" onclick="copyURL()">
+              <i class="fas fa-copy"></i>
+            </button>
+            <span class="text-xs mt-1">복사</span>
+          </div>
+          <div class="flex flex-col items-center">
+            <button title="URL 열기" class="bg-zinc-500 transition hover:bg-zinc-700 text-white rounded-md px-4 py-1" onclick="window.open(document.getElementById('url').value, '_blank')">
+              <i class="fas fa-arrow-up-right-from-square"></i>
+            </button>
+            <span class="text-xs mt-1">열기</span>
+          </div>
         </div>
       </div>
 
